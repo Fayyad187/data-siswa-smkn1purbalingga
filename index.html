@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entry Data Siswa - SMKN 1 Purbalingga</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f9ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      text-align: center;
+      color: #1e40af;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      font-weight: 600;
+      color: #1e3a8a;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #1e40af;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #1e3a8a;
+    }
+    .success {
+      text-align: center;
+      color: green;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Entry Data Siswa</h1>
+    <form id="dataForm">
+      <label>Nama Lengkap</label>
+      <input type="text" name="nama" required />
+
+      <label>NISN</label>
+      <input type="text" name="nisn" required />
+
+      <label>Kelas</label>
+      <input type="text" name="kelas" required />
+
+      <label>Jurusan</label>
+      <input type="text" name="jurusan" required />
+
+      <button type="submit">Kirim Data</button>
+      <div class="success" id="successMsg">✅ Data berhasil dikirim!</div>
+    </form>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwNhy4-dSNnalZaSMJbZ2PXGyE4AJnG-dLG4XgkTbiEdDWWHZ15Yg3MnF0LWFussVpNHg/exec";
+
+    document.getElementById("dataForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        nama: form.nama.value,
+        nisn: form.nisn.value,
+        kelas: form.kelas.value,
+        jurusan: form.jurusan.value
+      };
+
+      const res = await fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        document.getElementById("successMsg").style.display = "block";
+        form.reset();
+      } else {
+        alert("Gagal mengirim data. Coba lagi.");
+      }
+    });
+  </script>
+</body>
+</html>
